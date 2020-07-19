@@ -27,3 +27,5 @@ covid_data %>%
         panel.background=element_blank(),
         panel.border=element_blank(),
         panel.grid=element_blank())
+
+sum(dph_data$Positive)
