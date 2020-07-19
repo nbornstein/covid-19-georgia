@@ -2,12 +2,16 @@ library(dbplyr)
 library(tidyverse)
 library(urbnmapr)
 
+# load dataset from State of Georgia (https://ga-covid19.ondemand.sas.com/docs/ga_covid_data.zip)
 dph_data <- read.table("~/src/covid-19-georgia/countycases.csv", header=TRUE, sep=",")
 
+# append " County" to county name to match counties dataset
 dph_data$county_name <- with(dph_data, paste(county_resident, sep = " ", "County"))
 
+# join GA DPH data with counties dataset to get the geo information
 covid_data <- left_join(dph_data, counties, by = "county_name")
 
+# make the chloropleth
 covid_data %>% 
   filter(state_name =="Georgia") %>% 
   ggplot(mapping = aes(long, lat, group = group, fill = case_rate)) +
@@ -28,4 +32,5 @@ covid_data %>%
         panel.border=element_blank(),
         panel.grid=element_blank())
 
+# just for fun print today's number of cases
 sum(dph_data$Positive)
