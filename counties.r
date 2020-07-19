@@ -4,7 +4,7 @@ library(urbnmapr)
 library(wesanderson) 
 
 # load dataset from State of Georgia (https://ga-covid19.ondemand.sas.com/docs/ga_covid_data.zip)
-dph_data <- read.table("~/src/covid-19-georgia/countycases.csv", header=TRUE, sep=",")
+dph_data <- read.table("countycases.csv", header=TRUE, sep=",")
 
 # append " County" to county name to match counties dataset
 dph_data$county_name <- with(dph_data, paste(county_resident, sep = " ", "County"))
