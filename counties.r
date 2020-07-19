@@ -4,7 +4,9 @@ library(urbnmapr)
 
 dph_data <- read.table("~/src/covid-19-georgia/countycases.csv", header=TRUE, sep=",")
 
-covid_data <- left_join(dph_data, counties, by = c("county_resident" = "county_name")) 
+dph_data$county_name <- with(dph_data, paste(county_resident, sep = " ", "County"))
+
+covid_data <- left_join(dph_data, counties, by = "county_name")
 
 covid_data %>% 
   filter(state_name =="Georgia") %>% 
