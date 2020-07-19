@@ -1,6 +1,7 @@
 library(dbplyr)
 library(tidyverse)
 library(urbnmapr)
+library(wesanderson) 
 
 # load dataset from State of Georgia (https://ga-covid19.ondemand.sas.com/docs/ga_covid_data.zip)
 dph_data <- read.table("~/src/covid-19-georgia/countycases.csv", header=TRUE, sep=",")
@@ -17,7 +18,7 @@ covid_data %>%
   ggplot(mapping = aes(long, lat, group = group, fill = case_rate)) +
   geom_polygon(color = "#ffffff", size = .25) +
   scale_fill_gradientn(labels = waiver(),
-                       colors = topo.colors(20),
+                       colors = wes_palette("Zissou1", 10, type = "continuous"),
                        guide = guide_colorbar(title.position = "top")) +
   coord_map(projection = "albers", lat0 = 30, lat1 = 45) +
   labs(fill = "Positive Tests per 100,000 Residents") +
