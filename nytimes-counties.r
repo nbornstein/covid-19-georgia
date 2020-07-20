@@ -4,21 +4,21 @@ library(urbnmapr)
 library(wesanderson) 
 
 # load dataset from New York Times
-nyt_data <- read.table("/home/nbornstein/src/covid-19-data/us-counties.csv", header=TRUE, sep=",", quote = "\"")
+nyt_data <- read.table("https://github.com/nytimes/covid-19-data/blob/master/us-counties.csv?raw=true", 
+                       header=TRUE, sep=",", quote = "\"")
 
 # append " County" to county name to match counties dataset
 nyt_data$county_name <- with(nyt_data, paste(county, sep = " ", "County"))
 
-georgia_data <- nyt_data %>% filter(state == "Georgia")
-georgia_counties <- counties %>% filter(state_name == "Georgia")
+state_data <- nyt_data %>% filter(state == "Georgia")
+state_counties <- counties %>% filter(state_name == "Georgia")
 
 # join NY Times data with counties dataset to get the geo information
-covid_data <- left_join(georgia_data, georgia_counties, by = "county_name")
+covid_data <- left_join(state_data, state_counties, by = "county_name")
 
 # make the chloropleth
 covid_data %>% 
-  filter(state =="Georgia") %>% 
-  filter(date =="2020-07-18") %>%
+  filter(date =="2020-07-19") %>%
   ggplot(mapping = aes(long, lat, group = group, fill = cases)) +
   geom_polygon(color = "#ffffff", size = .25) +
   scale_fill_gradientn(labels = waiver(),
